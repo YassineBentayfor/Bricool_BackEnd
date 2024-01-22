@@ -1,5 +1,6 @@
 package ma.ac.emi.bricool.web;
 
+import ma.ac.emi.bricool.entities.Client;
 import ma.ac.emi.bricool.entities.Seller;
 import ma.ac.emi.bricool.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/sellers")
+@RequestMapping("/api/sellers")
 //@CrossOrigin(origins = "*")
 public class SellerController {
 
@@ -21,13 +23,25 @@ public class SellerController {
         this.sellerService = sellerService;
     }
 
+
+
     // Create a new seller
     @PostMapping
     public ResponseEntity<Seller> createSeller(@RequestBody Seller seller) {
         Seller createdSeller = sellerService.createSeller(seller);
         return new ResponseEntity<>(createdSeller, HttpStatus.CREATED);
     }
+    @GetMapping("/search")
+    public ResponseEntity<Seller> getSellerByEmail(@RequestParam("email") String email) {
+        Seller seller = sellerService.getSellerByEmail(email);
 
+        if (seller != null) {
+            return new ResponseEntity<>(seller, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    
     // Get all sellers
     @GetMapping
     public ResponseEntity<List<Seller>> getAllSellers() {
@@ -55,4 +69,6 @@ public class SellerController {
         sellerService.deleteSeller(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+
 }
