@@ -11,13 +11,20 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+
 @CrossOrigin(origins = "*")
+
 @RequestMapping("/api/clients")
 public class ClientController {
 
     @Autowired
     private ClientService clientService; // Assuming you have a ClientService implementation
-
+    @GetMapping("/search")
+    public ResponseEntity<Client> getClientByEmail(@RequestParam("email") String email) {
+        Optional<Client> client = Optional.ofNullable(clientService.getClientByEmail(email));
+        return client.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
     // Endpoint to create a new client
     @PostMapping
     public ResponseEntity<Client> createClient(@RequestBody Client client) {
