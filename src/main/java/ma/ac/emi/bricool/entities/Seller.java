@@ -16,6 +16,7 @@ import java.util.List;
 @ToString
 @Builder
 
+
 public class Seller{
 
     @Id
@@ -47,6 +48,7 @@ public class Seller{
     private String phoneNumber;
     private Date yearsOfBirth;
     private String gender;
+
 
 
 

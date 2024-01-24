@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/sellers")
-//@CrossOrigin(origins = "*")
+@RequestMapping("/api/sellers")
+@CrossOrigin(origins = "*")
 public class SellerController {
 
     private final SellerService sellerService;
